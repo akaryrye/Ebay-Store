@@ -30,16 +30,21 @@ export default class Search extends Component {
             if (items) {
                console.log(items)
                this.props.store.insertItems(items)
-            } /* else {
-               this.props.store.insertItems([{title: ["No Results"]}])
-            } */
-            
+            }
          })
    }
 
    handleChange = (e) => {
       this.props.store.updateSearchTerm(e.target.name, e.target.value)
    }
+
+   toggleModal = () => {
+      this.props.store.toggleModal();
+   }
+
+   /* currentItem = (index) => {
+
+   } */
 
    render () {
       return (
@@ -48,29 +53,32 @@ export default class Search extends Component {
                      id='searchByKey-input'
                      name='keyword'
                      placeholder='keyword'
-                     onInput={this.handleChange}
-                     />
+                     onInput={this.handleChange} />
             <button  id="searchByKey-btn"
-                     onClick={this.searchByKey}>
-               Search
-            </button>
+                     onClick={this.searchByKey} >
+                     Search</button>
+            <button  class='close'
+                     onClick={this.toggleModal} >
+                     X</button>
+
             <u><h3>Search Inventory</h3></u>
             <ol>
             
             {this.props.store.searchResults.items &&
                this.props.store.searchResults.items.map((item, index) => (
-                  <li key={index}>
+                  <li   key={index}
+                        onClick={() => this.props.store.currentItem(index)} >
                      <div className='search-result-item'>{item.title[0]}</div>
                   </li>
                ))
             }
             
             </ol>
-            <ItemModal />
+            {this.props.store.searchResults.showModal && 
+               <ItemModal toggleModal={this.toggleModal}
+                           currentItem={this.props.store.searchResults.currentItem} />
+            }
          </div>
       )
    }
 } 
-//else {
-   //return(<h3>No Results</h3>)
-//}}

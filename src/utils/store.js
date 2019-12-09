@@ -11,6 +11,7 @@ export default class Store {
    searchResults = {
       keyword: "",
       category: "",
+      showModal: false,
       items: ""
    }
 
@@ -22,6 +23,17 @@ export default class Store {
 
    updateSearchTerm(key, value) {
       this.searchResults[key] = value
+   }
+
+   currentItem (index) {
+      if (this.searchResults.items[index]) {
+         this.searchResults.currentItem = this.searchResults.items[index]
+         this.toggleModal()
+      }
+   }
+
+   toggleModal () {
+      this.searchResults.showModal = !this.searchResults.showModal
    }
 
    clear() {
@@ -48,6 +60,8 @@ decorate(Store, {
    searchResults: observable,
    insertItems: action,
    updateSearchTerm: action,
+   currentItem: action,
+   toggleModal: action,
    clear: action,
    insertOne: action,
    totalSum: computed

@@ -36,17 +36,54 @@ body {
   text-align: center;
   min-height: 300px;
   width: 80%;
-  border: 3px solid black;
+  border: 3px solid #000000;
   border-radius: 10px;
-  background-color: grey;
+  background-color: #808080;
 }
 
 .search-result-item {
-  background-color: white;
-  border: 2px solid black;
+  background-color: #ffffff;
+  border: 2px solid #000000;
   min-height: 50px;
   margin: 0 auto;
   width: 80%;
+}
+
+.modal {
+  /*display: none; */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #000000;
+  background-color: #000000d2;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  width: 80%;
+}
+
+.close {
+  color: #850000b4;
+  float: right;
+  font-size: 18px;
+  font-weight: bold;
+  width: 40px;
+  border-radius: 10px;
+}
+
+.close:hover, .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .controls {
@@ -82,5 +119,4 @@ td, th {
 
 .about {
   min-height: 300px;
-
 }
