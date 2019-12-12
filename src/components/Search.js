@@ -3,33 +3,48 @@ import { observer } from "mobx-react"
 import axios from 'axios';
 import ItemModal from './ItemModal';
 
-
-
 const baseUrl = "https://cors-anywhere.herokuapp.com/https://svcs.ebay.com/services/search/FindingService/v1?SERVICE-VERSION=1.13.0"
 const appID = "&SECURITY-APPNAME=RyanAlld-ProjectT-PRD-5dfb0df12-1f10d5a8";
 const storeName = "Sally%27s%20Fine%20Vintage%20Toys";
 const findInStore = `&OPERATION-NAME=findItemsIneBayStores&storeName=${storeName}`;
-//const findByKey = "&OPERATION-NAME=findItemsByKeywords";
 const respFormat = "&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD";
-const url = `${baseUrl}${appID}${respFormat}${findInStore}`;
-
 
 export default class Search extends Component {
 
    Search = observer(Search)
 
-   searchByKey = (e) => {
-      let keyword = this.props.store.searchResults.keyword
-      console.log(keyword)
-      axios.get(url + `&keywords=${keyword}`)
+   componentDidMount () {
+      axios.get(`${baseUrl}${appID}${respFormat}${findInStore}`)
          .then( result => {
-            
-            //let data = JSON.parse(result);
-            let items = result.data.findItemsIneBayStoresResponse[0].searchResult[0].item;
-            
-            if (items) {
-               console.log(items)
+            const items = result.data.findItemsIneBayStoresResponse[0].searchResult[0].item;
+            items.forEach( item => {
+               const category = {
+                  name: item.primaryCategory[0].categoryName[0], 
+                  id: item.primaryCategory[0].categoryId[0] 
+               }
+               this.props.store.insertCategory(category)
+            })
+         })
+   }
+
+   searchByKey = (e) => {
+      let url = `${baseUrl}${appID}${respFormat}${findInStore}`;
+      
+      if (this.props.store.searchResults.keyword !== "") {
+         url += `&keywords=${this.props.store.searchResults.keyword}`
+      }
+
+      if (this.props.store.searchResults.currentCategory.name !== 'all') {
+         url += `&categoryId=${this.props.store.searchResults.currentCategory}`
+      }
+      
+      axios.get(url)
+         .then( result => {
+            if (result.data.findItemsIneBayStoresResponse[0].searchResult[0].item) {
+               let items = result.data.findItemsIneBayStoresResponse[0].searchResult[0].item;
                this.props.store.insertItems(items)
+            } else {
+               console.log('No items were retrieved, possible error')
             }
          })
    }
@@ -42,13 +57,23 @@ export default class Search extends Component {
       this.props.store.toggleModal();
    }
 
-   /* currentItem = (index) => {
-
-   } */
-
    render () {
       return (
-         <div className="search">
+         <div className='search'>
+            
+            <select  onChange={this.handleChange}
+                     name='currentCategory' >
+               <option  value="all" >
+                        All Categories</option>
+               { this.props.store.searchResults.categories ? (
+                  this.props.store.searchResults.categories.map( (category, index) => (
+                     <option key={index} value={category.id}>{category.name}</option> 
+                  ))
+               ) : (
+                  null
+               )}
+            </select>
+
             <input   type='text'
                      id='searchByKey-input'
                      name='keyword'
@@ -57,7 +82,7 @@ export default class Search extends Component {
             <button  id="searchByKey-btn"
                      onClick={this.searchByKey} >
                      Search</button>
-            <button  class='close'
+            <button  className='close'
                      onClick={this.toggleModal} >
                      X</button>
 

@@ -10,7 +10,8 @@ export default class Store {
    
    searchResults = {
       keyword: "",
-      category: "",
+      currentCategory: "all",
+      categories: [],
       showModal: false,
       items: ""
    }
@@ -19,6 +20,17 @@ export default class Store {
       console.log('adding items to store')
       console.log(items)
       this.searchResults.items = items
+   }
+
+   insertCategory (category) {
+      let found = false;
+      for (let i = 0; i < this.searchResults.categories.length; i++) {
+         if (category.id === this.searchResults.categories[i].id) {
+            found = true;
+            break;
+         }
+      }
+      if (found === false) this.searchResults.categories.push(category)
    }
 
    updateSearchTerm(key, value) {
@@ -59,6 +71,7 @@ decorate(Store, {
    employeesList: observable,
    searchResults: observable,
    insertItems: action,
+   insertCategory: action,
    updateSearchTerm: action,
    currentItem: action,
    toggleModal: action,
