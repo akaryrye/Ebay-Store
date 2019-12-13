@@ -8,6 +8,7 @@ const appID = "&SECURITY-APPNAME=RyanAlld-ProjectT-PRD-5dfb0df12-1f10d5a8";
 const storeName = "Sally%27s%20Fine%20Vintage%20Toys";
 const findInStore = `&OPERATION-NAME=findItemsIneBayStores&storeName=${storeName}`;
 const respFormat = "&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD";
+let paginate = "&paginationInput.entriesPerPage=20&paginationInput.pageNumber=";
 
 export default class Search extends Component {
 
@@ -28,13 +29,13 @@ export default class Search extends Component {
    }
 
    searchByKey = (e) => {
-      let url = `${baseUrl}${appID}${respFormat}${findInStore}`;
+      let url = `${baseUrl}${appID}${respFormat}${findInStore}${paginate}${this.props.store.searchResults.page}`;
       
       if (this.props.store.searchResults.keyword !== "") {
          url += `&keywords=${this.props.store.searchResults.keyword}`
       }
 
-      if (this.props.store.searchResults.currentCategory.name !== 'all') {
+      if (this.props.store.searchResults.currentCategory !== 'all') {
          url += `&categoryId=${this.props.store.searchResults.currentCategory}`
       }
       
@@ -51,6 +52,11 @@ export default class Search extends Component {
 
    handleChange = (e) => {
       this.props.store.updateSearchTerm(e.target.name, e.target.value)
+   }
+
+   handlePaginate = (e) => {
+      this.handleChange(e)
+      this.searchByKey(e)
    }
 
    toggleModal = () => {
@@ -99,6 +105,19 @@ export default class Search extends Component {
             }
             
             </ol>
+            <div className='pageButtons'>
+               <button  className='pageBtn'
+                        name='page'
+                        value='1'
+                        onClick={this.handleChange} >
+                        one</button>
+               <button  className='pageBtn'
+                        name='page'
+                        value='2'
+                        onClick={this.handlePaginate} >
+                        two</button>
+            </div>
+
             {this.props.store.searchResults.showModal && 
                <ItemModal toggleModal={this.toggleModal}
                            currentItem={this.props.store.searchResults.currentItem} />

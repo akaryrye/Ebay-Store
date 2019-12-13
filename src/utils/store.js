@@ -11,12 +11,13 @@ export default class Store {
    searchResults = {
       keyword: "",
       currentCategory: "all",
+      page: "1",
       categories: [],
       showModal: false,
       items: ""
    }
 
-   insertItems(items) {
+   insertItems = (items) => {
       console.log('adding items to store')
       console.log(items)
       this.searchResults.items = items
