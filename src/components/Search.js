@@ -8,7 +8,8 @@ const appID = "&SECURITY-APPNAME=RyanAlld-ProjectT-PRD-5dfb0df12-1f10d5a8";
 const storeName = "Sally%27s%20Fine%20Vintage%20Toys";
 const findInStore = `&OPERATION-NAME=findItemsIneBayStores&storeName=${storeName}`;
 const respFormat = "&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD";
-let paginate = "&paginationInput.entriesPerPage=20&paginationInput.pageNumber=";
+let entriesPerPage = `&paginationInput.entriesPerPage=`;
+let pageNumber = `&paginationInput.pageNumber=`;
 
 export default class Search extends Component {
 
@@ -29,7 +30,10 @@ export default class Search extends Component {
    }
 
    searchByKey = (e) => {
-      let url = `${baseUrl}${appID}${respFormat}${findInStore}${paginate}${this.props.store.searchResults.page}`;
+      
+      let url =   `${baseUrl}${appID}${respFormat}${findInStore}
+                  ${entriesPerPage}${this.props.store.searchResults.resultsPerPage}
+                  ${pageNumber}${this.props.store.searchResults.page}`;
       
       if (this.props.store.searchResults.keyword !== "") {
          url += `&keywords=${this.props.store.searchResults.keyword}`
@@ -44,6 +48,9 @@ export default class Search extends Component {
             if (result.data.findItemsIneBayStoresResponse[0].searchResult[0].item) {
                let items = result.data.findItemsIneBayStoresResponse[0].searchResult[0].item;
                this.props.store.insertItems(items)
+               let pages = result.data.findItemsIneBayStoresResponse[0].paginationOutput[0].totalPages[0]
+               this.props.store.updateSearchTerm("totalPages", pages)
+               console.log('pages = ' + pages);
             } else {
                console.log('No items were retrieved, possible error')
             }
@@ -78,13 +85,29 @@ export default class Search extends Component {
                ) : (
                   null
                )}
-            </select>
+            </select><br/>
 
             <input   type='text'
                      id='searchByKey-input'
                      name='keyword'
                      placeholder='keyword'
-                     onInput={this.handleChange} />
+                     onInput={this.handleChange} /><br/>
+            <input   type='number'
+                     min={5}
+                     max={100}
+                     value={this.props.store.searchResults.resultsPerPage}
+                     id='resultsPerPage'
+                     name='resultsPerPage'
+                     placeholder='Number of Results'
+                     onChange={this.handleChange} /><br/>
+            <input   type='number'
+                     min={1}
+                     max={this.props.store.searchResults.totalPages}
+                     value={this.props.store.searchResults.page}
+                     id='pageNumber'
+                     name='page'
+                     placeholder='Page'
+                     onChange={this.handleChange} /><br/>
             <button  id="searchByKey-btn"
                      onClick={this.searchByKey} >
                      Search</button>
@@ -109,7 +132,7 @@ export default class Search extends Component {
                <button  className='pageBtn'
                         name='page'
                         value='1'
-                        onClick={this.handleChange} >
+                        onClick={this.handlePaginate} >
                         one</button>
                <button  className='pageBtn'
                         name='page'
