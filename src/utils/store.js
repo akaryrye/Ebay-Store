@@ -16,7 +16,8 @@ export default class Store {
       totalPages: 0,
       categories: [],
       showModal: false,
-      items: ""
+      items: "",
+      show: true
    }
 
    insertItems = (items) => {

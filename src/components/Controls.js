@@ -14,6 +14,7 @@ export default class Controls extends Component {
     }
 
    render () {
+
       return (
          <div className="controls">
             <button onClick={this.clearList} >
