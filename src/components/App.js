@@ -5,7 +5,7 @@ import Nav from './Nav';
 import About from './About';
 import Controls from './Controls';
 import Table from './Table';
-import Search from './Search';
+import Search from './Search/';
 import Footer from './Footer';
 import Title from './Title';
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { observer } from "mobx-react"
 import axios from 'axios';
 import ItemModal from './ItemModal';
+import Listing from './Listing';
 import Modal from 'react-bootstrap/Modal';
 
 const baseUrl = "https://cors-anywhere.herokuapp.com/https://svcs.ebay.com/services/search/FindingService/v1?SERVICE-VERSION=1.13.0"
@@ -60,6 +61,11 @@ export default class Search extends Component {
 
    handleChange = (e) => {
       this.props.store.updateSearchTerm(e.target.name, e.target.value)
+      this.props.store.updateSearchTerm('page', 1)
+   }
+
+   updatePage = (e) => {
+      this.props.store.updateSearchTerm('page', e.target.value)
    }
 
    handlePaginate = (e) => {
@@ -127,7 +133,7 @@ export default class Search extends Component {
                                  id='pageNumber'
                                  name='page'
                                  placeholder='Page'
-                                 onChange={this.handleChange} />
+                                 onChange={this.updatePage} />
                      </div>
                      
                      <button  className="btn btn-primary float-right"
@@ -140,31 +146,17 @@ export default class Search extends Component {
                
                <div className='row'>
                   <div className='col'>
-
-                     <ol>
+                     <ol className='row'>
                      {this.props.store.searchResults.items &&
                         this.props.store.searchResults.items.map((item, index) => (
-                           <li   key={index}
+                           <li   className='col col-sm-6 col-md-4 col-lg-3 col-xl-2'
+                                 key={index}
                                  onClick={() => this.props.store.currentItem(index)} >
-                              <div className='search-result-item'>{item.title[0]}</div>
+                              <Listing item={item} />
                            </li>
                         ))
                      }
                      </ol>
-
-                     <div className='pageButtons'>
-                        <button  className='pageBtn'
-                                 name='page'
-                                 value='1'
-                                 onClick={this.handlePaginate} >
-                                 one</button>
-                        <button  className='pageBtn'
-                                 name='page'
-                                 value='2'
-                                 onClick={this.handlePaginate} >
-                                 two</button>
-                     </div>
-
                   </div>
                </div>
             </div>
@@ -172,18 +164,11 @@ export default class Search extends Component {
             <Modal   show={this.props.store.searchResults.showModal}
                      onHide={this.toggleModal}
                      dialogClassName="modal-90w"
-                     aria-labelledby="example-custom-modal-styling-title"
-                     >
-               <h1>Bootstrap Modal Test</h1>
+                     aria-labelledby="example-custom-modal-styling-title" >
                <ItemModal  toggleModal={this.toggleModal}
                            currentItem={this.props.store.searchResults.currentItem} />
-
             </Modal>
-            
-            {this.props.store.searchResults.showModal && 
-               <ItemModal  toggleModal={this.toggleModal}
-                           currentItem={this.props.store.searchResults.currentItem} />
-            }
+
          </div>
       )
    }
