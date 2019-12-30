@@ -66,12 +66,13 @@ export default class Search extends Component {
 
    updatePage = (e) => {
       this.props.store.updateSearchTerm('page', e.target.value)
-   }
-
-   handlePaginate = (e) => {
-      this.handleChange(e)
       this.searchByKey(e)
    }
+
+   /* handlePaginate = (e) => {
+      this.handleChange(e)
+      this.searchByKey(e)
+   } */
 
    toggleModal = () => {
       this.props.store.toggleModal();
@@ -134,6 +135,24 @@ export default class Search extends Component {
                                  name='page'
                                  placeholder='Page'
                                  onChange={this.updatePage} />
+                     </div>
+
+                     <div className='row'>
+                        
+                        {parseInt(this.props.store.searchResults.page) > 1 &&
+                           <button  className='btn'
+                                    value={parseInt(this.props.store.searchResults.page) - 1}
+                                    onClick={this.updatePage} >
+                                    prev</button>
+                        }
+                        
+                        {parseInt(this.props.store.searchResults.page) < parseInt(this.props.store.searchResults.totalPages) &&
+                           <button  className='btn'
+                                    value={parseInt(this.props.store.searchResults.page) + 1}
+                                    onClick={this.updatePage} >
+                                    next</button>
+                        }
+
                      </div>
                      
                      <button  className="btn btn-primary float-right"
