@@ -69,16 +69,31 @@ export default class Search extends Component {
       this.searchByKey(e)
    }
 
-   /* handlePaginate = (e) => {
-      this.handleChange(e)
-      this.searchByKey(e)
-   } */
-
    toggleModal = () => {
       this.props.store.toggleModal();
    }
 
    render () {
+      let page = parseInt(this.props.store.searchResults.page)
+      let totalPages = this.props.store.searchResults.totalPages
+      let pageArr = [];
+      
+      for (let i = 1; i <= 3; i++) {
+         if (i <= totalPages) pageArr.push(i)
+      }
+
+      for (let i = -2; i < 3; i++) {
+         if ((page + i) < totalPages && (page + i) > 3) {
+            pageArr.push(page + i)
+         }
+      }
+
+      for (let i = totalPages - 2; i <= totalPages; i++) {
+         if ((i >= totalPages) && (i > pageArr[pageArr.length - 1])) pageArr.push(i)
+      }
+      
+      console.log(pageArr)
+
       return (
          <div className='row'>
             <div className='col'>
@@ -87,7 +102,7 @@ export default class Search extends Component {
                   <div className='col form-group'>
                      
                      <div className='row'>
-                        <label for='keyword' className='col'>Search Keyword (optional)</label>
+                        <label htmlFor='keyword' className='col'>Search Keyword (optional)</label>
                         <input   className='form-control col'
                                  type='text'
                                  id='searchByKey-input'
@@ -97,7 +112,7 @@ export default class Search extends Component {
                      </div>
 
                      <div className='row'>
-                        <label for='currentCategory' className='col'>Choose a Category (optional)</label>
+                        <label htmlFor='currentCategory' className='col'>Choose a Category (optional)</label>
                         <select  className='form-control col'
                                  name='currentCategory'
                                  onChange={this.handleChange} >
@@ -112,7 +127,7 @@ export default class Search extends Component {
                      </div>
                      
                      <div className='row'>
-                        <label for='resultsPerPage' className='col'>Show {this.props.store.searchResults.resultsPerPage} Results Per Page</label>
+                        <label htmlFor='resultsPerPage' className='col'>Show {this.props.store.searchResults.resultsPerPage} Results Per Page</label>
                         <input   className='form-control col'
                                  type='range'
                                  min={5}
@@ -125,12 +140,12 @@ export default class Search extends Component {
                      </div>
                      
                      <div className='row'>
-                        <label for='page' className='col'>Page {this.props.store.searchResults.page}</label>
+                        <label htmlFor='page' className='col'>Page {page}</label>
                         <input   className='form-control col'
                                  type='range'
                                  min={1}
-                                 max={this.props.store.searchResults.totalPages}
-                                 value={this.props.store.searchResults.page}
+                                 max={totalPages}
+                                 value={page}
                                  id='pageNumber'
                                  name='page'
                                  placeholder='Page'
@@ -138,21 +153,34 @@ export default class Search extends Component {
                      </div>
 
                      <div className='row'>
-                        
-                        {parseInt(this.props.store.searchResults.page) > 1 &&
+                        {page > 1 &&
                            <button  className='btn'
-                                    value={parseInt(this.props.store.searchResults.page) - 1}
+                                    value={page - 1}
                                     onClick={this.updatePage} >
-                                    prev</button>
-                        }
+                                    prev</button> }
                         
-                        {parseInt(this.props.store.searchResults.page) < parseInt(this.props.store.searchResults.totalPages) &&
+                        {page < totalPages &&
                            <button  className='btn'
-                                    value={parseInt(this.props.store.searchResults.page) + 1}
+                                    value={page + 1}
                                     onClick={this.updatePage} >
-                                    next</button>
-                        }
+                                    next</button> }
+                     </div>
 
+                     <div className='row'>
+                        {pageArr.map((pageIdx) => { 
+                           if (page === pageIdx) {
+                              return(
+                                 <button  className='btn font-weight-bold'
+                                          value={pageIdx}
+                                          onClick={this.updatePage} >
+                                          {pageIdx}</button> )}
+                           else return (
+                              <button  className='btn'
+                                          value={pageIdx}
+                                          onClick={this.updatePage} >
+                                          {pageIdx}</button> )
+                           })      
+                        }
                      </div>
                      
                      <button  className="btn btn-primary float-right"
