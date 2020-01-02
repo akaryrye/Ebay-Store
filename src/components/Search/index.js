@@ -33,9 +33,9 @@ export default class Search extends Component {
 
    searchByKey = (e) => {
       
-      let url =   `${baseUrl}${appID}${respFormat}${findInStore}
-                  ${entriesPerPage}${this.props.store.searchResults.resultsPerPage}
-                  ${pageNumber}${this.props.store.searchResults.page}`;
+      let url = `${baseUrl}${appID}${respFormat}${findInStore}${entriesPerPage}`;
+      url += `${this.props.store.searchResults.resultsPerPage}`;
+      url += `${pageNumber}${this.props.store.searchResults.page}`;
       
       if (this.props.store.searchResults.keyword !== "") {
          url += `&keywords=${this.props.store.searchResults.keyword}`
@@ -75,7 +75,7 @@ export default class Search extends Component {
 
    render () {
       let page = parseInt(this.props.store.searchResults.page)
-      let totalPages = this.props.store.searchResults.totalPages
+      let totalPages = parseInt(this.props.store.searchResults.totalPages)
       let pageArr = [];
       
       for (let i = 1; i <= 3; i++) {
@@ -154,13 +154,13 @@ export default class Search extends Component {
 
                      <div className='row'>
                         {page > 1 &&
-                           <button  className='btn'
+                           <button  className='btn btn-secondary'
                                     value={page - 1}
                                     onClick={this.updatePage} >
                                     prev</button> }
                         
                         {page < totalPages &&
-                           <button  className='btn'
+                           <button  className='btn btn-secondary'
                                     value={page + 1}
                                     onClick={this.updatePage} >
                                     next</button> }
@@ -171,14 +171,16 @@ export default class Search extends Component {
                            if (page === pageIdx) {
                               return(
                                  <button  className='btn font-weight-bold'
+                                          key={pageIdx}
                                           value={pageIdx}
                                           onClick={this.updatePage} >
                                           {pageIdx}</button> )}
                            else return (
                               <button  className='btn'
-                                          value={pageIdx}
-                                          onClick={this.updatePage} >
-                                          {pageIdx}</button> )
+                                       key={pageIdx}
+                                       value={pageIdx}
+                                       onClick={this.updatePage} >
+                                       {pageIdx}</button> )
                            })      
                         }
                      </div>
