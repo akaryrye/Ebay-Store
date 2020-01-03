@@ -153,14 +153,24 @@ export default class Search extends Component {
                      </div>
 
                      <div className='row'>
-                        {page > 1 &&
+                        {page <= 1 &&
                            <button  className='btn btn-secondary'
+                                    disabled >
+                                    prev</button> }
+                                                
+                        {page > 1 &&
+                           <button  className='btn btn-primary'
                                     value={page - 1}
                                     onClick={this.updatePage} >
                                     prev</button> }
-                        
-                        {page < totalPages &&
+
+                        { !totalPages &&
                            <button  className='btn btn-secondary'
+                                    disabled>
+                                    next</button> }
+                           
+                        { page < totalPages &&
+                           <button  className='btn btn-primary'
                                     value={page + 1}
                                     onClick={this.updatePage} >
                                     next</button> }
@@ -221,4 +231,5 @@ export default class Search extends Component {
          </div>
       )
    }
-} 
+}
+

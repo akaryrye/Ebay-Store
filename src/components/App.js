@@ -22,22 +22,24 @@ export default class App extends Component {
                
                <div className='row'>
                   <Switch>
-                     <Route path="/about">
+                     <Route path='/about'>
                         <About />
                      </Route>
                      
-                     <Route path="/table">
+                     <Route path='/table'>
                         <div className='table-container'>
                            <Controls store={appStore} />
                            <Table store={appStore} />
                         </div>
                      </Route>
 
-                     <Route path="/search">
+                     <Route path='/search'>
                         <Search store={appStore} />
                      </Route>
                   </Switch>
                </div>
+
+               <div className='py-3'></div>
 
                <div className='row'>
                   <Footer />
