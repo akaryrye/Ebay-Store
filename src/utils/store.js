@@ -11,7 +11,7 @@ export default class Store {
    searchResults = {
       keyword: "",
       currentCategory: "all",
-      page: "1",
+      page: 1,
       resultsPerPage: 20,
       totalPages: 0,
       categories: [],
