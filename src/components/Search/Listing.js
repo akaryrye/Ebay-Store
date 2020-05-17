@@ -7,8 +7,9 @@ export default function Listing (props) {
       <div className="card search-result-item">
          <img className="card-img-top" src={props.item.galleryURL[0]} alt="item thumbnail" />
          <div className="card-body">
-            <h5 className="card-title">{props.item.title[0]}</h5>
-            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h6 className="card-title">{props.item.title[0]}</h6>
+            <h5 className="card-text">${props.item.shippingInfo[0].shippingServiceCost[0]['__value__']}</h5>
+            <p className="card-text">${props.item.sellingStatus[0].currentPrice[0]['__value__']} shipping</p>
          </div>
       </div>
    )
