@@ -4,9 +4,9 @@ import axios from 'axios';
 
 const baseUrl = "https://cors-anywhere.herokuapp.com/https://svcs.ebay.com/services/search/FindingService/v1?SERVICE-VERSION=1.13.0"
 const appID = "&SECURITY-APPNAME=RyanAlld-ProjectT-PRD-5dfb0df12-1f10d5a8";
-const storeName = "Sally%27s%20Fine%20Vintage%20Toys";
-const findInStore = `&OPERATION-NAME=findItemsIneBayStores&storeName=${storeName}`;
-const respFormat = "&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD";
+const storeName = "sallbarnet0";
+const findInStore = `&OPERATION-NAME=findItemsAdvanced&itemFilter(0).name=Seller&itemFilter(0).value=${storeName}`;
+const respFormat = "&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD=true";
 let entriesPerPage = `&paginationInput.entriesPerPage=`;
 let pageNumber = `&paginationInput.pageNumber=`;
 
@@ -20,7 +20,7 @@ export default class Controls extends Component {
       console.log(url)
       axios.get(url)
          .then( result => {
-            const items = result.data.findItemsIneBayStoresResponse[0].searchResult[0].item;
+            const items = result.data.findItemsAdvancedResponse[0].searchResult[0].item;
             items.forEach( item => {
                const category = {
                   name: item.primaryCategory[0].categoryName[0],
@@ -47,10 +47,10 @@ export default class Controls extends Component {
       
       axios.get(url)
          .then( result => {
-            if (result.data.findItemsIneBayStoresResponse[0].searchResult[0].item) {
-               let items = result.data.findItemsIneBayStoresResponse[0].searchResult[0].item;
+            if (result.data.findItemsAdvancedResponse[0].searchResult[0].item) {
+               let items = result.data.findItemsAdvancedResponse[0].searchResult[0].item;
                this.props.store.insertItems(items)
-               let pages = result.data.findItemsIneBayStoresResponse[0].paginationOutput[0].totalPages[0]
+               let pages = result.data.findItemsAdvancedResponse[0].paginationOutput[0].totalPages[0]
                this.props.store.updateSearchTerm("totalPages", pages)
                console.log('pages = ' + pages);
             } else {
