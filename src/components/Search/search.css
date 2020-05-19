@@ -1,9 +1,15 @@
+.search-title {
+   background-color: #7171ee;
+   text-align: center;
+}
+
 .controls-container {
    background-color: #af9f9f;
    border: 10px solid #af9f9f;
    border-radius: 12px;
 }
 
-.search-title {
-   background-color: blue;
+.controls-container .form-control {
+ background-color: #e0e0f3;
+ text-align: center;
 }

@@ -97,19 +97,17 @@ export default class Controls extends Component {
             <div className='col-1 col-md-2 col-xl-3'></div>
             <div className='col-10 col-md-8 col-xl-6 m-4 form-group controls-container'>
             
-               <div className='row'>
-                  <label htmlFor='keyword' className='col-7'>Search Keyword (optional)</label>
-                  <input   className='form-control col-5'
+               <div className='row my-3 justify-content-center'>
+                  <input   className='form-control col-9'
                            type='text'
                            id='searchByKey-input'
                            name='keyword'
-                           placeholder='keyword'
+                           placeholder='keyword (optional)'
                            onInput={this.handleChange} />
                </div>
 
-               <div className='row'>
-                  <label htmlFor='currentCategory' className='col-7'>Choose a Category (optional)</label>
-                  <select  className='form-control col-5'
+               <div className='row my-3 justify-content-center'>
+                  <select  className='form-control col-9'
                            name='currentCategory'
                            onChange={this.handleChange} >
                      <option  value="all" >
@@ -124,9 +122,9 @@ export default class Controls extends Component {
                   </select>
                </div>
 
-               <div className='row'>
-                  <label htmlFor='resultsPerPage' className='col'>Show {this.props.store.searchResults.resultsPerPage} Results Per Page</label>
-                  <input   className='form-control col'
+               <div className='row  justify-content-center'>
+                  <label htmlFor='resultsPerPage' className='col-12 text-center'>Items Per Page: {this.props.store.searchResults.resultsPerPage} </label>
+                  <input   className='form-control col-6'
                            type='range'
                            min={5}
                            max={50}
@@ -138,7 +136,6 @@ export default class Controls extends Component {
                </div>
                
                <div className='row'>
-                  <label htmlFor='page' className='col'>Page {page}</label>
                   <input   className='form-control col'
                            type='range'
                            min={1}
@@ -149,6 +146,7 @@ export default class Controls extends Component {
                            placeholder='Page'
                            onChange={this.updatePage} />
                </div>
+               <label htmlFor='page' className='col'>Page {page}</label>
 
                <div className='row'>
                   {page <= 1 &&

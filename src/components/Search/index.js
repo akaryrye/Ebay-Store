@@ -19,22 +19,22 @@ export default class Search extends Component {
    render () {
       return (
          <div className='col'>
-            <u><h3 className='search-title'>Search Inventory</h3></u>
+            <u><h3 className='search-title'>Search The Store</h3></u>
             
             <Controls store={this.props.store} />
             
             <div className='row'>
                <div className='col'>
-                  <ol className='row'>
+                  <div className='row'>
                   {this.props.store.searchResults.items &&
                      this.props.store.searchResults.items.map((item, index) => (
-                        <li   className='col col-sm-6 col-md-4 col-lg-3 col-xl-2'
+                        <div   className='col col-sm-6 col-md-4 col-lg-3 col-xl-2'
                               key={index}
                               onClick={() => this.props.store.currentItem(index)} >
                            <Listing item={item} />
-                        </li>
+                        </div>
                      ))}
-                  </ol>
+                  </div>
                </div>
             </div>
 
