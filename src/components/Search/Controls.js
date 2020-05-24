@@ -122,9 +122,9 @@ export default class Controls extends Component {
                   </select>
                </div>
 
-               <div className='row  justify-content-center'>
-                  <label htmlFor='resultsPerPage' className='col-12 text-center'>Items Per Page: {this.props.store.searchResults.resultsPerPage} </label>
-                  <input   className='form-control col-6'
+               <div className='row justify-content-center'>
+                  <h6 className='col-12 text-center'>Items Per Page: {this.props.store.searchResults.resultsPerPage}</h6>
+                  <input   className='form-control col-8'
                            type='range'
                            min={5}
                            max={50}
@@ -135,8 +135,9 @@ export default class Controls extends Component {
                            onChange={this.handleChange} />
                </div>
                
-               <div className='row'>
-                  <input   className='form-control col'
+               <div className='row justify-content-center'>
+                  <h6 className='col-12 text-center'>Page {page}</h6>
+                  <input   className='form-control col-8'
                            type='range'
                            min={1}
                            max={totalPages}
@@ -146,33 +147,8 @@ export default class Controls extends Component {
                            placeholder='Page'
                            onChange={this.updatePage} />
                </div>
-               <label htmlFor='page' className='col'>Page {page}</label>
 
-               <div className='row'>
-                  {page <= 1 &&
-                     <button  className='btn btn-secondary'
-                              disabled >
-                              prev</button> }
-                                          
-                  {page > 1 &&
-                     <button  className='btn btn-primary'
-                              value={page - 1}
-                              onClick={this.updatePage} >
-                              prev</button> }
-
-                  { page >= totalPages &&
-                     <button  className='btn btn-secondary'
-                              disabled>
-                              next</button> }
-                     
-                  { page < totalPages &&
-                     <button  className='btn btn-primary'
-                              value={page + 1}
-                              onClick={this.updatePage} >
-                              next</button> }
-               </div>
-
-               <div className='row'>
+               <div className='row justify-content-center'>
                   {pageArr.map((pageIdx) => { 
                      if (page === pageIdx) {
                         return(
@@ -190,12 +166,36 @@ export default class Controls extends Component {
                      })      
                   }
                </div>
-               
-               <button  className="btn btn-primary float-right"
-                        type='submit'
-                        id='searchByKey-btn'
-                        onClick={this.searchByKey} >
-                        Search</button>
+
+               <div className='row justify-content-around'>
+                  <div classname='col-3'>
+                     {page <= 1 &&
+                        <button  className='btn btn-secondary'
+                                 disabled >
+                                 prev</button> }                  
+                     {page > 1 &&
+                        <button  className='btn btn-primary'
+                                 value={page - 1}
+                                 onClick={this.updatePage} >
+                                 prev</button> }
+                     { page >= totalPages &&
+                        <button  className='btn btn-secondary'
+                                 disabled>
+                                 next</button> }
+                     { page < totalPages &&
+                        <button  className='btn btn-primary'
+                                 value={page + 1}
+                                 onClick={this.updatePage} >
+                                 next</button> }
+                  </div>
+                  <div classname='col-9s'>
+                     <button  className="btn btn-primary"
+                           type='submit'
+                           id='searchByKey-btn'
+                           onClick={this.searchByKey} >
+                           Search</button>
+                  </div>
+               </div>
             </div>
             <div className='col-1 col-md-2 col-xl-3'></div>
          </div>
