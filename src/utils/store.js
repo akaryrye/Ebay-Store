@@ -17,7 +17,8 @@ export default class Store {
       categories: [],
       showModal: false,
       items: "",
-      show: true
+      show: true,
+      emailStatus: ""
    }
 
    insertItems = (items) => {

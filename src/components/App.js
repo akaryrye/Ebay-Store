@@ -23,7 +23,7 @@ export default class App extends Component {
                <div className='row'>
                   <Switch>
                      <Route path='/about'>
-                        <About />
+                        <About   store={appStore} />
                      </Route>
                      
                      <Route path='/table'>

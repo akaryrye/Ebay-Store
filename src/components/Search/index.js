@@ -10,44 +10,43 @@ import './search.css';
 
 export default class Search extends Component {
 
-   Search = observer(Search)
+  Search = observer(Search)
 
-   toggleModal = () => {
-      this.props.store.toggleModal();
-   }
+  toggleModal = () => {
+    this.props.store.toggleModal();
+  }
 
-   render () {
-      return (
-         <div className='col'>
-            <u><h3 className='search-title'>Search The Store</h3></u>
+  render () {
+    return (
+      <div className='col'>
+        <u><h3 className='search-title'>Search The Store</h3></u>
             
-            <Controls store={this.props.store} />
+          <Controls store={this.props.store} />
             
-            <div className='row'>
-               <div className='col'>
-                  <div className='row'>
-                  {this.props.store.searchResults.items &&
-                     this.props.store.searchResults.items.map((item, index) => (
-                        <div   className='col col-sm-6 col-md-4 col-lg-3 col-xl-2'
-                              key={index}
-                              onClick={() => this.props.store.currentItem(index)} >
-                           <Listing item={item} />
-                        </div>
-                     ))}
-                  </div>
-               </div>
+          <div className='row'>
+            <div className='col'>
+              <div className='row'>
+                {this.props.store.searchResults.items &&
+                  this.props.store.searchResults.items.map((item, index) => (
+                    <div  className='col col-sm-6 col-md-4 col-lg-3 col-xl-2'
+                          key={index}
+                          onClick={() => this.props.store.currentItem(index)} >
+                      <Listing item={item} />
+                    </div>
+                  ))}
+              </div>
             </div>
+          </div>
 
-            <Modal   show={this.props.store.searchResults.showModal}
-                     onHide={this.toggleModal}
-                     dialogClassName="modal-90w"
-                     aria-labelledby="example-custom-modal-styling-title" >
-               <ItemModal  toggleModal={this.toggleModal}
-                           currentItem={this.props.store.searchResults.currentItem} />
-            </Modal>               
-
-         </div>
-      )
-   }
+          <Modal  show={this.props.store.searchResults.showModal}
+                  onHide={this.toggleModal}
+                  dialogClassName="modal-90w"
+                  aria-labelledby="example-custom-modal-styling-title" >
+              <ItemModal  toggleModal={this.toggleModal}
+                          currentItem={this.props.store.searchResults.currentItem} />
+          </Modal>
+      </div>
+    )
+  }
 }
 
