@@ -1,5 +1,7 @@
-import React, { Component } from "react";
-import { observer } from "mobx-react"
+import React, { Component } from 'react';
+import { observer } from 'mobx-react';
+import Row from 'react-bootstrap/Row';
+import './../Contact/contact.css';
 
 export default class MyForm extends Component {
 
@@ -31,15 +33,27 @@ export default class MyForm extends Component {
       <div>
         <form onSubmit={this.submitForm}
               method={"POST"}
-              action={"https://formspree.io/mlepjdqz"} >
-          <label>Email:</label>
-          <input type="email" name="email" />
-          <label>Message:</label>
-          <input type="text" name="message" />
-          {this.props.store.searchResults['emailStatus'] === "SUCCESS" ? 
-            <div><button>Submit</button><hr/><p>Thanks!</p></div> : <div><button>Submit</button><hr/></div>}
-          {this.props.store.searchResults['emailStatus'] === "ERROR" && 
-            <p>Ooops! There was an error.</p>}
+              action={"https://formspree.io/mlepjdqz"}
+              className="contactForm" >
+          
+          <Row className='justify-content-center'>
+            <input  type="email"
+                    name="email"
+                    placeholder="email address"
+                    className="col-6 my-3 formEmail"/>
+          </Row>
+          <Row className='justify-content-center'>
+            <textarea  type="text"
+                      name="message"
+                      placeholder="type your message here"
+                      className="col-8 my-3 text-align-left formMessage" />
+          </Row>
+          <Row className='justify-content-center'>
+            {this.props.store.searchResults['emailStatus'] === "SUCCESS" ? 
+              <div><button>Submit</button><hr/><p>Thanks!</p></div> : <div><button>Submit</button><hr/></div>}
+            {this.props.store.searchResults['emailStatus'] === "ERROR" && 
+              <p>Ooops! There was an error.</p>}
+          </Row>
         </form>
       </div>
     );
