@@ -8,9 +8,9 @@ export default function Title () {
       <div className='row'>
          <div className='col'>
             <div className="jumbotron jumbotron-fluid">
-               <Row className="container">
-                  <h1 className="display-4 col-7 col-sm-8 col-lg-10 text-center">Sally's Fine Vintage Toys</h1>
+               <Row className="container justify-content-between align-items-center">
                   <img src={sallyMd} className="col-5 col-sm-4 col-lg-2"></img>
+                  <h1 className="display-4 col-7">Sally's Fine Vintage Toys</h1>
                </Row>
             </div> 
          </div>
